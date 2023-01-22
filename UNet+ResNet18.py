@@ -54,12 +54,6 @@ SEED = 7
 
 
 def seed_everything(seed):
-    '''
-    设置整个开发环境的seed
-    :param seed:
-    :param device:
-    :return:
-    '''
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
@@ -83,7 +77,7 @@ t = transforms.Compose([
 ])
 
 BATCH_SIZE = 8
-validation_split = 0.2
+validation_split = 0.1   # finally, we will use the whole dataset to train a model
 shuffle_dataset = True
 #
 train_dataset = ImageFolder(root=train_path, transform=t)
@@ -240,9 +234,9 @@ def predict(model):
         # print(correct)
         # print(num)
         output = p.cpu().numpy()
-        outs.append(output)
-        preds.append(labels.cpu().numpy())
-    return np.array(outs), np.array(preds), round(correct / num, 5)
+        preds.append(output)
+        outs.append(labels.cpu().numpy())
+    return np.array(preds), np.array(outs), round(correct / num, 5)
 
 
 if __name__ == "__main__":
